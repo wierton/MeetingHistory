@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Edit Speech Paper
+{% endblock %}
+
+{% block content %}
+    <h1>Edit Speech Paper</h1>
+    <form action="{{ url_for('edit_speech_paper', paper_id=paper.id) }}" method="post" enctype="multipart/form-data">
+        <label for="title">Paper Title:</label>
+        <input type="text" id="title" name="title" value="{{ paper.title }}" required>
+        <label for="speecher">Speecher:</label>
+        <input type="text" id="speecher" name="speecher" value="{{ paper.speecher }}" required>
+        <label for="time">Speech Time:</label>
+        <input type="text" id="time" name="time" value="{{ paper.time }}" required>
+        <label for="ppt_file">PPT File (optional):</label>
+        <input type="file" id="ppt_file" name="ppt_file">
+        <button type="submit">Save Changes</button>
+    </form>
+{% endblock %}
+

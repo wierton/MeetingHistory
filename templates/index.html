@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Home
+{% endblock %}
+
+{% block content %}
+    <h1>Welcome to the Paper Discussion Backup and Query Website</h1>
+    <div class="buttons">
+        <a href="{{ url_for('speech_paper_submission') }}" class="button">Speech Paper Submission</a>
+        <a href="{{ url_for('recommended_paper_submission') }}" class="button">Recommended Paper Submission</a>
+    </div>
+{% endblock %}
+

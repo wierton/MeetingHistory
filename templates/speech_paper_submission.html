@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Speech Paper Submission
+{% endblock %}
+
+{% block content %}
+    <h1>Speech Paper Submission</h1>
+    <form action="{{ url_for('speech_paper_submission') }}" method="post" enctype="multipart/form-data">
+        <label for="title">Paper Title:</label>
+        <input type="text" id="title" name="title" required>
+        <label for="speecher">Speecher:</label>
+        <input type="text" id="speecher" name="speecher" required>
+        <label for="time">Speech Time:</label>
+        <input type="text" id="time" name="time" required>
+        <label for="ppt_file">PPT File:</label>
+        <input type="file" id="ppt_file" name="ppt_file" required>
+        <button type="submit">Submit</button>
+    </form>
+    <h2>Submitted Speech Papers</h2>
+    <table class="paper-table">
+        <thead>
+            <tr>
+                <th>Paper Title</th>
+                <th>Speecher</th>
+                <th>Speech Time</th>
+                <th>PPT File</th>
+                <th>Edit</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for paper in speech_papers %}
+            <tr>
+                <td>{{ paper.title }}</td>
+                <td>{{ paper.speecher }}</td>
+                <td>{{ paper.time }}</td>
+                <td>{{ paper.ppt_file }}</td>
+                <td><a class="edit-button" href="{{ url_for('edit_speech_paper', paper_id=paper.id) }}">Edit</a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
+
