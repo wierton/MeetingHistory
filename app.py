@@ -1,4 +1,5 @@
 import os
+import pathlib
 from werkzeug.utils import secure_filename
 from flask import Flask, render_template, request, redirect, url_for
 from models import db, SpeechPaper, RecommendedPaper
@@ -35,8 +36,9 @@ def speech_paper_submission():
 
         # Check if the submitted file is allowed
         if ppt_file and allowed_file(ppt_file.filename):
-            filename = secure_filename(ppt_file.filename)
-            ppt_file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            filename = f"{speecher}-{time}{os.path.splitext(ppt_file.filename)[1]}"
+            pathlib.Path('uploads').mkdir(exist_ok=True)
+            ppt_file.save(os.path.join('uploads', secure_filename(filename)))
 
             new_speech_paper = SpeechPaper(title=title, speecher=speecher, time=time, ppt_file=filename)
             db.session.add(new_speech_paper)
