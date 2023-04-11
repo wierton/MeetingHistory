@@ -48,7 +48,7 @@ def speech_paper_submission():
         else:
             flash('Only PPT and PPTX files are allowed.')
 
-    speech_papers = SpeechPaper.query.order_by(SpeechPaper.id).all()
+    speech_papers = SpeechPaper.query.order_by(SpeechPaper.time).all()
     return render_template('speech_paper_submission.html', speech_papers=speech_papers)
 
 @app.route('/edit_speech_paper/<int:paper_id>', methods=['GET', 'POST'])
