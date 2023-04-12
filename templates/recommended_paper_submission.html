@@ -26,7 +26,7 @@ Recommended Paper Submission
         <tbody>
           {% for paper in recommended_papers %}
           <tr>
-              <td>{{ paper.title }}</td>
+              <td><a href="https://scholar.google.com/scholar?q={{ paper.title|urlencode }}" target="_blank">{{ paper.title }}</a></td>
               <td>{{ paper.author }}</td>
               <td>
                   <a class="edit-button" href="{{ url_for('toggle_discussed', paper_id=paper.id) }}">

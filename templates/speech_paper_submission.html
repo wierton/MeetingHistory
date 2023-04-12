@@ -31,7 +31,7 @@ Speech Paper Submission
         <tbody>
           {% for paper in speech_papers %}
           <tr>
-              <td>{{ paper.title }}</td>
+              <td><a href="https://scholar.google.com/scholar?q={{ paper.title|urlencode }}" target="_blank">{{ paper.title }}</a></td>
               <td>{{ paper.speecher }}</td>
               <td>{{ paper.time }}</td>
               <td><a href="{{ url_for('download_file', filename=paper.ppt_file) }}">{{ paper.ppt_file }}</a></td>
