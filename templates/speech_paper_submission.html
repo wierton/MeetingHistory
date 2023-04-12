@@ -29,15 +29,18 @@ Speech Paper Submission
             </tr>
         </thead>
         <tbody>
-            {% for paper in speech_papers %}
-            <tr>
-                <td>{{ paper.title }}</td>
-                <td>{{ paper.speecher }}</td>
-                <td>{{ paper.time }}</td>
-                <td>{{ paper.ppt_file }}</td>
-                <td><a class="edit-button" href="{{ url_for('edit_speech_paper', paper_id=paper.id) }}">Edit</a></td>
-            </tr>
-            {% endfor %}
+          {% for paper in speech_papers %}
+          <tr>
+              <td>{{ paper.title }}</td>
+              <td>{{ paper.speecher }}</td>
+              <td>{{ paper.time }}</td>
+              <td><a href="{{ url_for('download_file', filename=paper.ppt_file) }}">{{ paper.ppt_file }}</a></td>
+              <td>
+                  <a class="edit-button" href="{{ url_for('edit_speech_paper', paper_id=paper.id) }}">Edit</a> |
+                  <a class="edit-button" href="{{ url_for('delete_speech_paper', paper_id=paper.id) }}">Delete</a>
+              </td>
+          </tr>
+          {% endfor %}
         </tbody>
     </table>
 {% endblock %}

@@ -24,14 +24,25 @@ Recommended Paper Submission
             </tr>
         </thead>
         <tbody>
-            {% for paper in recommended_papers %}
-            <tr>
-                <td>{{ paper.title }}</td>
-                <td>{{ paper.author }}</td>
-                <td>{{ paper.discussed }}</td>
-                <td><a class="edit-button" href="{{ url_for('edit_recommended_paper', paper_id=paper.id) }}">Edit</a></td>
-            </tr>
-            {% endfor %}
+          {% for paper in recommended_papers %}
+          <tr>
+              <td>{{ paper.title }}</td>
+              <td>{{ paper.author }}</td>
+              <td>
+                  <a class="edit-button" href="{{ url_for('toggle_discussed', paper_id=paper.id) }}">
+                      {% if paper.discussed %}
+                          Discussed
+                      {% else %}
+                          Not Discussed
+                      {% endif %}
+                  </a>
+              </td>
+              <td>
+                  <a class="edit-button" href="{{ url_for('edit_recommended_paper', paper_id=paper.id) }}">Edit</a> |
+                  <a class="edit-button" href="{{ url_for('delete_recommended_paper', paper_id=paper.id) }}">Delete</a>
+              </td>
+          </tr>
+          {% endfor %}
         </tbody>
     </table>
 {% endblock %}

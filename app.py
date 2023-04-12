@@ -3,6 +3,7 @@ import pathlib
 from werkzeug.utils import secure_filename
 from flask import Flask, render_template, request, redirect, url_for
 from models import db, SpeechPaper, RecommendedPaper
+from flask import send_from_directory
 
 UPLOAD_FOLDER = 'uploads'
 ALLOWED_EXTENSIONS = {'ppt', 'pptx'}
@@ -50,6 +51,18 @@ def speech_paper_submission():
 
     speech_papers = SpeechPaper.query.order_by(SpeechPaper.time).all()
     return render_template('speech_paper_submission.html', speech_papers=speech_papers)
+
+@app.route('/download/<path:filename>')
+def download_file(filename):
+    return send_from_directory('uploads', filename, as_attachment=True)
+
+@app.route('/delete_speech_paper/<int:paper_id>', methods=['GET'])
+def delete_speech_paper(paper_id):
+    speech_paper = SpeechPaper.query.get_or_404(paper_id)
+    db.session.delete(speech_paper)
+    db.session.commit()
+
+    return redirect(url_for('speech_paper_submission'))
 
 @app.route('/edit_speech_paper/<int:paper_id>', methods=['GET', 'POST'])
 def edit_speech_paper(paper_id):
@@ -101,9 +114,25 @@ def edit_recommended_paper(paper_id):
         paper.author = author
         db.session.commit()
 
-        return redirect(url_for('recommended_papers'))
+        return redirect(url_for('recommended_paper_submission'))
 
     return render_template('edit_recommended_paper.html', paper=paper)
+
+@app.route('/toggle_discussed/<int:paper_id>', methods=['GET'])
+def toggle_discussed(paper_id):
+    recommended_paper = RecommendedPaper.query.get_or_404(paper_id)
+    recommended_paper.discussed = not recommended_paper.discussed
+    db.session.commit()
+
+    return redirect(url_for('recommended_paper_submission'))
+
+@app.route('/delete_recommended_paper/<int:paper_id>', methods=['GET'])
+def delete_recommended_paper(paper_id):
+    recommended_paper = RecommendedPaper.query.get_or_404(paper_id)
+    db.session.delete(recommended_paper)
+    db.session.commit()
+
+    return redirect(url_for('recommended_paper_submission'))
 
 if __name__ == '__main__':
     app.run(debug=True)
